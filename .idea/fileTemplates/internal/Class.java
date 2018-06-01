@@ -25,7 +25,7 @@ class Main {
         InputStream in = System.in;
         PrintWriter out = new PrintWriter(System.out);
         if (debugMode) {
-            in = Files.newInputStream(Paths.get("C:\\Users\\pnatarajan02\\Documents\\github\\UVA\\__in.txt"));
+            in = Files.newInputStream(Paths.get("D:\\Github\\UVA-solutions\\__in.txt"));
         }
 
         try (Scanner sc = new Scanner(in)) {
