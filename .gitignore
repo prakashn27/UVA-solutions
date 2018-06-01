@@ -25,3 +25,4 @@ hs_err_pid*
 out/*
 .idea/workspace.xml
 .idea/fileTemplates/internal/Class.java
+__in.txt
