@@ -31,42 +31,22 @@ class Main {
 
             while (sc.hasNext()) {
                 String line = sc.next();
-                LinkedList<String> res = new LinkedList<>();
-                StringBuilder temp = new StringBuilder();
-                boolean addLast = true;
+                LinkedList<Character> res = new LinkedList<>();
+                int location = 0;
                 for(Character ch : line.toCharArray()) {
-                    if (ch == '[' || ch == ']') {
-                        if (addLast) {
-                            res.addLast(temp.toString());
-                        } else {
-                            res.addFirst(temp.toString());
-                        }
-                        temp = new StringBuilder();
-                        addLast = (ch == '[' ? false : true);
+                    if (ch == '[') {
+                        location = 0;
+                    }
+                    else if (ch == ']'){
+                        location = res.size();
                     }
                     else {
-                        temp.append(ch);
+                        res.add(location++, ch);
                     }
-//                    if (ch == '[') {
-//                        addLast = false;
-//                        continue;
-//                    }
-//                    if (ch == ']') {
-//                        addLast = true;
-//                        continue;
-//                    }
-//                    if (addLast) {
-//                        res.addLast(Character.toString(ch));
-//                    } else {
-//                        res.addFirst(Character.toString(ch));
-//                    }
                 }
-                if (addLast) {
-                    res.addLast(temp.toString());
-                } else {
-                    res.addFirst(temp.toString());
-                }
-                System.out.println(res.stream().reduce("", (x,y) -> x+y));
+                StringBuilder sb=new StringBuilder();
+                for (char c : res) sb.append(c);
+                System.out.println(sb.toString());
             }
         }
         out.flush();
