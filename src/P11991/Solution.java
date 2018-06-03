@@ -30,13 +30,11 @@ class Main {
         try (Scanner sc = new Scanner(in)) {
             while(sc.hasNext()) {
                 int n  = sc.nextInt(), m = sc.nextInt();
-//                int[] arr = new int[n+1];
-                ArrayList[] graph = (ArrayList[]) new ArrayList[1_000_000];
+                ArrayList[] graph = new ArrayList[1_000_000];
                 for (int v = 0; v < 1_000_000; v++) {
                     graph[v] = new ArrayList();
                 }
                 for (int i = 0; i < n; i++) {
-//                    arr[i+1] = sc.nextInt();
                     graph[sc.nextInt()].add(i+1);
                 }
                 for (int i = 0; i < m; i++) {
