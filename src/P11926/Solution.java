@@ -26,41 +26,59 @@ class Main {
         if (debugMode) {
             in = Files.newInputStream(Paths.get("D:\\Github\\UVA-solutions\\__in.txt"));
         }
-        int MAXN = 1000000;
+        int MAXN = 1000001;
         try (Scanner sc = new Scanner(in)) {
             while (true) {
                 int n = sc.nextInt(), m = sc.nextInt();
                 if (n == 0 && m == 0) break;
-                BitSet main = new BitSet(MAXN);
-                Boolean done = false;
+                int[][] values = new int[n+m][3];
+                BitSet res = new BitSet(MAXN);
+                Boolean conflict = false;
                 for (int i = 0; i < n; i++) {
                     int start = sc.nextInt(), end = sc.nextInt();
-                    if (done) continue;
-                    BitSet cur = new BitSet();
-                    cur.set(start, end);
-                    if (main.intersects(cur)) {
-                        out.println("CONFLICT");
-                        done = true;
-                    }
-                    main.or(cur);
+                    values[i][0] = start;
+                    values[i][1] = end;
                 }
-                for (int i = 0; i < m; i++) {
+                for (int i = n; i < n+m; i++) {
                     int start = sc.nextInt(), end = sc.nextInt(), interval = sc.nextInt();
-                    if (done) continue;
-                    BitSet cur = new BitSet();
-                    for (int j = start, jend = end; j < MAXN; j += interval, jend += interval) {
-                        if (jend > MAXN) jend = MAXN;
-                        cur.set(j, jend);
-                    }
-                    if (main.intersects(cur)) {
-                        out.println("CONFLICT");
-                        done = true;
-                    }
-                    main.or(cur);
+                    values[i][0] = start;
+                    values[i][1] = end;
+                    values[i][2] = interval;
                 }
-                if (done) continue;
-
-                out.println("NO CONFLICT");
+                for (int i = 0; i < n && !conflict; i++) {
+                    int a = values[i][0];
+                    int b = values[i][1];
+                    for (int j = a; j < b; j++) {
+                        if (res.get(j)) {
+                            conflict = true;
+                            break;
+                        }
+                        res.set(j);
+                    }
+                }
+                if (!conflict) {
+                    for (int i = n; i < n + m; i++) {
+                        int a = values[i][0];
+                        int b = values[i][1];
+                        int c = values[i][2];
+                        while (a < 1000001) {
+                            for (int j = a; j < b && j < 1000001; j++) {
+                                if (res.get(j)) {
+                                    conflict = true;
+                                    break;
+                                }
+                                res.set(j);
+                            }
+                            a += c;
+                            b += c;
+                        }
+                    }
+                }
+                if (conflict) {
+                    out.println("CONFLICT");
+                } else {
+                    out.println("NO CONFLICT");
+                }
             }
         }
         out.flush();
